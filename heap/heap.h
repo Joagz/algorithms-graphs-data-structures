@@ -15,10 +15,11 @@ struct heap
 // Allocate size for node_n elements of uint32_t
 struct heap *heapalloc(size_t node_n);
 // Delete element at position index
-void heapdelete(size_t index, struct heap *H);
+uint32_t heapdelete(size_t index, struct heap *H);
 // Insert a new element into the heap
 void heapinsert(uint32_t node, struct heap *H);
 // Get the root of the heap
 uint32_t heaproot(struct heap *H);
-
+// Get the root of the heap and delete it
+uint32_t heapextractroot(struct heap *H);
 #endif

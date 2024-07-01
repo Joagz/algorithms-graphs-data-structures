@@ -111,14 +111,24 @@ void heapinsert(uint32_t node, struct heap *H)
     heapswim(H->length, H);
 }
 
-void heapdelete(size_t index, struct heap *H)
+uint32_t heapdelete(size_t index, struct heap *H)
 {
     if (index > H->length || H->length == 0)
-        return;
+        return 0xFFFFFFFF;
 
+    uint32_t numCpy = H->nodes[index];
     exch(H->nodes, index, H->length);
     H->length--;
     heapsink(index, H);
+    return numCpy;
+}
+
+uint32_t heapextractroot(struct heap *H)
+{
+    if (H->length == 0)
+        return 0x00;
+
+    return heapdelete(1, H);
 }
 
 #ifdef DEBUG
@@ -136,51 +146,11 @@ int main()
     heapinsert(13, H);
     heapinsert(18, H);
 
-    for (int i = 0; i <= H->length; i++)
-    {
-        printf("%d ", H->nodes[i]);
-    }
-    printf("\n");
-
-    heapinsert(9, H);
-
-    for (int i = 0; i <= H->length; i++)
-    {
-        printf("%d ", H->nodes[i]);
-    }
-    printf("\n");
-    heapdelete(1, H);
-
-    for (int i = 0; i <= H->length; i++)
-    {
-        printf("%d ", H->nodes[i]);
-    }
-    printf("\n");
-    heapdelete(1, H);
-
-    for (int i = 0; i <= H->length; i++)
-    {
-        printf("%d ", H->nodes[i]);
-    }
-    printf("\n");
-    heapdelete(1, H);
-
-    for (int i = 0; i <= H->length; i++)
-    {
-        printf("%d ", H->nodes[i]);
-    }
-    printf("\n");
-    heapdelete(1, H);
-
-    for (int i = 0; i <= H->length; i++)
-    {
-        printf("%d ", H->nodes[i]);
-    }
-
-    printf("\n");
-
-    free(H->nodes);
-    free(H);
+    printf("ROOT 1: %d\n", heapextractroot(H));
+    printf("ROOT 2: %d\n", heapextractroot(H));
+    printf("ROOT 3: %d\n", heapextractroot(H));
+    printf("ROOT 4: %d\n", heapextractroot(H));
+    printf("ROOT 5: %d\n", heapextractroot(H));
 
     return 0;
 }
